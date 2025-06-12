@@ -2,7 +2,7 @@
 
 [![PHP Version](https://img.shields.io/badge/PHP-^8.1-8892BF?logo=php)](https://www.php.net/)
 [![License](https://img.shields.io/github/license/php-fast-forward/http-factory)](https://opensource.org/licenses/MIT)
-[![CI](https://github.com/php-fast-forward/http-factory/actions/workflows/ci.yml/badge.svg)](https://github.com/php-fast-forward/http-factory/actions)
+[![CI](https://github.com/php-fast-forward/http-factory/actions/workflows/tests.yml/badge.svg)](https://github.com/php-fast-forward/http-factory/actions)
 
 A [PSR-11](https://www.php-fig.org/psr/psr-11/) compatible service provider that registers a fully functional set of [PSR-17](https://www.php-fig.org/psr/psr-17/) and [PSR-7](https://www.php-fig.org/psr/psr-7/) HTTP factories using [Nyholm PSR-7](https://github.com/Nyholm/psr7) and [Nyholm ServerRequestCreator](https://github.com/Nyholm/psr7-server).
 
