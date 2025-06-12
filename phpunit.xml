@@ -12,7 +12,7 @@
          failOnRisky="true"
          failOnWarning="true">
     <testsuites>
-        <testsuite name="Fast Forward Config test suite">
+        <testsuite name="Fast Forward Http Factory Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
