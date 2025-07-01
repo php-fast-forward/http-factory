@@ -15,9 +15,10 @@
         "source": "https://github.com/php-fast-forward/http-factory"
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "container-interop/service-provider": "^0.4.1",
-        "fast-forward/container": "^1.2",
+        "fast-forward/container": "^1.5",
+        "fast-forward/http-message": "^1.2",
         "nyholm/psr7": "^1.8",
         "nyholm/psr7-server": "^1.1",
         "psr/http-factory": "^1.1",
@@ -48,8 +49,8 @@
         }
     },
     "scripts": {
-        "cs-check": "php-cs-fixer fix --dry-run --diff",
-        "cs-fix": "php-cs-fixer fix",
+        "cs-check": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --dry-run --diff",
+        "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix",
         "mutation-testing": "infection --threads=4",
         "pre-commit": [
             "@cs-check",

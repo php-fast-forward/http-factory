@@ -18,14 +18,19 @@ namespace FastForward\Http\Message\Factory\ServiceProvider;
 use FastForward\Container\Factory\AliasFactory;
 use FastForward\Container\Factory\InvokableFactory;
 use FastForward\Container\Factory\MethodFactory;
+use FastForward\Http\Message\Factory\ResponseFactory;
+use FastForward\Http\Message\Factory\ResponseFactoryInterface;
+use FastForward\Http\Message\Factory\StreamFactory;
+use FastForward\Http\Message\Factory\StreamFactoryInterface;
 use Interop\Container\ServiceProviderInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
+use Nyholm\Psr7Server\ServerRequestCreatorInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseFactoryInterface as PsrResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface as PsrStreamFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 
@@ -54,24 +59,35 @@ final class HttpMessageFactoryServiceProvider implements ServiceProviderInterfac
     public function getFactories(): array
     {
         return [
-            Psr17Factory::class         => new InvokableFactory(Psr17Factory::class),
-            ServerRequestCreator::class => new InvokableFactory(
+            RequestFactoryInterface::class       => AliasFactory::get(Psr17Factory::class),
+            PsrResponseFactoryInterface::class   => AliasFactory::get(Psr17Factory::class),
+            ServerRequestFactoryInterface::class => AliasFactory::get(Psr17Factory::class),
+            PsrStreamFactoryInterface::class     => AliasFactory::get(Psr17Factory::class),
+            UploadedFileFactoryInterface::class  => AliasFactory::get(Psr17Factory::class),
+            UriFactoryInterface::class           => AliasFactory::get(Psr17Factory::class),
+            ServerRequestCreatorInterface::class => AliasFactory::get(ServerRequestCreator::class),
+            ResponseFactoryInterface::class      => AliasFactory::get(ResponseFactory::class),
+            StreamFactoryInterface::class        => AliasFactory::get(StreamFactory::class),
+            Psr17Factory::class                  => new InvokableFactory(Psr17Factory::class),
+            ServerRequestCreator::class          => new InvokableFactory(
                 ServerRequestCreator::class,
                 RequestFactoryInterface::class,
                 UriFactoryInterface::class,
                 UploadedFileFactoryInterface::class,
                 StreamFactoryInterface::class,
             ),
+            ResponseFactory::class => new InvokableFactory(
+                ResponseFactory::class,
+                PsrResponseFactoryInterface::class,
+            ),
+            StreamFactory::class => new InvokableFactory(
+                StreamFactory::class,
+                PsrStreamFactoryInterface::class,
+            ),
             ServerRequestInterface::class => new MethodFactory(
                 ServerRequestCreator::class,
                 'fromGlobals'
             ),
-            RequestFactoryInterface::class       => AliasFactory::get(Psr17Factory::class),
-            ResponseFactoryInterface::class      => AliasFactory::get(Psr17Factory::class),
-            ServerRequestFactoryInterface::class => AliasFactory::get(Psr17Factory::class),
-            StreamFactoryInterface::class        => AliasFactory::get(Psr17Factory::class),
-            UploadedFileFactoryInterface::class  => AliasFactory::get(Psr17Factory::class),
-            UriFactoryInterface::class           => AliasFactory::get(Psr17Factory::class),
         ];
     }
 

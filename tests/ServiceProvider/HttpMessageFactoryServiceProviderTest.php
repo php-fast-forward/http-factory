@@ -18,16 +18,23 @@ namespace FastForward\Http\Message\Factory\Tests\ServiceProvider;
 use FastForward\Container\Factory\AliasFactory;
 use FastForward\Container\Factory\InvokableFactory;
 use FastForward\Container\Factory\MethodFactory;
+use FastForward\Container\ServiceProviderContainer;
+use FastForward\Http\Message\Factory\ResponseFactory;
+use FastForward\Http\Message\Factory\ResponseFactoryInterface;
 use FastForward\Http\Message\Factory\ServiceProvider\HttpMessageFactoryServiceProvider;
+use FastForward\Http\Message\Factory\StreamFactory;
+use FastForward\Http\Message\Factory\StreamFactoryInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseFactoryInterface as PsrResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface as PsrStreamFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 
@@ -35,12 +42,22 @@ use Psr\Http\Message\UriFactoryInterface;
  * @internal
  */
 #[CoversClass(HttpMessageFactoryServiceProvider::class)]
+#[UsesClass(ResponseFactory::class)]
+#[UsesClass(StreamFactory::class)]
 final class HttpMessageFactoryServiceProviderTest extends TestCase
 {
+    use ProphecyTrait;
+
+    private HttpMessageFactoryServiceProvider $provider;
+
+    protected function setUp(): void
+    {
+        $this->provider = new HttpMessageFactoryServiceProvider();
+    }
+
     public function testGetFactoriesReturnsExpectedMappings(): void
     {
-        $provider  = new HttpMessageFactoryServiceProvider();
-        $factories = $provider->getFactories();
+        $factories = $this->provider->getFactories();
 
         self::assertArrayHasKey(Psr17Factory::class, $factories);
         self::assertInstanceOf(InvokableFactory::class, $factories[Psr17Factory::class]);
@@ -53,11 +70,13 @@ final class HttpMessageFactoryServiceProviderTest extends TestCase
 
         $aliases = [
             RequestFactoryInterface::class,
-            ResponseFactoryInterface::class,
+            PsrResponseFactoryInterface::class,
             ServerRequestFactoryInterface::class,
-            StreamFactoryInterface::class,
+            PsrStreamFactoryInterface::class,
             UploadedFileFactoryInterface::class,
             UriFactoryInterface::class,
+            ResponseFactoryInterface::class,
+            StreamFactoryInterface::class,
         ];
 
         foreach ($aliases as $alias) {
@@ -68,7 +87,21 @@ final class HttpMessageFactoryServiceProviderTest extends TestCase
 
     public function testGetExtensionsReturnsEmptyArray(): void
     {
-        $provider = new HttpMessageFactoryServiceProvider();
-        self::assertSame([], $provider->getExtensions());
+        self::assertSame([], $this->provider->getExtensions());
+    }
+
+    // Funcional test to ensure that the container resolves aliases correctly
+    public function testFunctionalGetFactoryReturnInstanceOfService(): void
+    {
+        $container = new ServiceProviderContainer($this->provider);
+
+        foreach ($this->provider->getFactories() as $alias => $factory) {
+            self::assertTrue($container->has($alias), "Container does not have alias: {$alias}");
+
+            $object = $container->get($alias);
+
+            self::assertNotNull($object, "Failed to resolve alias: {$alias}");
+            self::assertInstanceOf($alias, $object, "Resolved object is not an instance of {$alias}");
+        }
     }
 }
