@@ -16,13 +16,10 @@
     },
     "require": {
         "php": "^8.2",
-        "container-interop/service-provider": "^0.4.1",
         "fast-forward/container": "^1.5",
         "fast-forward/http-message": "^1.2",
-        "nyholm/psr7": "^1.8",
         "nyholm/psr7-server": "^1.1",
-        "psr/http-factory": "^1.1",
-        "psr/http-message": "^2.0"
+        "psr/http-factory": "^1.1"
     },
     "require-dev": {
         "coisa/php-cs-fixer": "^2.1",
