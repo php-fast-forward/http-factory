@@ -1,3 +1,3 @@
-[submodule "/Users/mentordosnerds/Sites/github.com/php-fast-forward/http-factory/.github/wiki"]
-	path = /Users/mentordosnerds/Sites/github.com/php-fast-forward/http-factory/.github/wiki
+[submodule ".github/wiki"]
+	path = .github/wiki
 	url = git@github.com:php-fast-forward/http-factory.wiki.git
