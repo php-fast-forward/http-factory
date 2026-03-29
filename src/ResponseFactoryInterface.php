@@ -8,9 +8,12 @@ declare(strict_types=1);
  * This source file is subject to the license bundled
  * with this source code in the file LICENSE.
  *
- * @link      https://github.com/php-fast-forward/http-factory
- * @copyright Copyright (c) 2025 Felipe Sayão Lobato Abreu <github@mentordosnerds.com>
+ * @copyright Copyright (c) 2025-2026 Felipe Sayão Lobato Abreu <github@mentordosnerds.com>
  * @license   https://opensource.org/licenses/MIT MIT License
+ *
+ * @see       https://github.com/php-fast-forward/http-factory
+ * @see       https://github.com/php-fast-forward
+ * @see       https://datatracker.ietf.org/doc/html/rfc2119
  */
 
 namespace FastForward\Http\Message\Factory;
@@ -71,6 +74,7 @@ interface ResponseFactoryInterface extends PsrResponseFactoryInterface
      * The response MUST contain no body and MUST have status code 204.
      *
      * @param array<string, string|string[]> $headers optional headers to include in the response
+     * @param array $headers
      *
      * @return ResponseInterface the generated no content response
      */
@@ -82,9 +86,10 @@ interface ResponseFactoryInterface extends PsrResponseFactoryInterface
      * The response MUST include a 'Location' header and an appropriate status code:
      * 301 (permanent) if $permanent is true, or 302 (temporary) otherwise.
      *
-     * @param string|UriInterface            $uri       the target location for the redirect
-     * @param bool                           $permanent if true, issues a permanent redirect; otherwise, temporary
-     * @param array<string, string|string[]> $headers   optional additional headers to include
+     * @param string|UriInterface $uri the target location for the redirect
+     * @param bool $permanent if true, issues a permanent redirect; otherwise, temporary
+     * @param array<string, string|string[]> $headers optional additional headers to include
+     * @param array $headers
      *
      * @return ResponseInterface the generated redirect response
      */

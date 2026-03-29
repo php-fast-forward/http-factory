@@ -8,9 +8,12 @@ declare(strict_types=1);
  * This source file is subject to the license bundled
  * with this source code in the file LICENSE.
  *
- * @link      https://github.com/php-fast-forward/http-factory
- * @copyright Copyright (c) 2025 Felipe Sayão Lobato Abreu <github@mentordosnerds.com>
+ * @copyright Copyright (c) 2025-2026 Felipe Sayão Lobato Abreu <github@mentordosnerds.com>
  * @license   https://opensource.org/licenses/MIT MIT License
+ *
+ * @see       https://github.com/php-fast-forward/http-factory
+ * @see       https://github.com/php-fast-forward
+ * @see       https://datatracker.ietf.org/doc/html/rfc2119
  */
 
 namespace FastForward\Http\Message\Factory\Tests\ServiceProvider;
@@ -27,6 +30,7 @@ use FastForward\Http\Message\Factory\StreamFactoryInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -50,12 +54,19 @@ final class HttpMessageFactoryServiceProviderTest extends TestCase
 
     private HttpMessageFactoryServiceProvider $provider;
 
+    /**
+     * @return void
+     */
     protected function setUp(): void
     {
         $this->provider = new HttpMessageFactoryServiceProvider();
     }
 
-    public function testGetFactoriesReturnsExpectedMappings(): void
+    /**
+     * @return void
+     */
+    #[Test]
+    public function getFactoriesReturnsExpectedMappings(): void
     {
         $factories = $this->provider->getFactories();
 
@@ -85,23 +96,31 @@ final class HttpMessageFactoryServiceProviderTest extends TestCase
         }
     }
 
-    public function testGetExtensionsReturnsEmptyArray(): void
+    /**
+     * @return void
+     */
+    #[Test]
+    public function getExtensionsReturnsEmptyArray(): void
     {
         self::assertSame([], $this->provider->getExtensions());
     }
 
     // Funcional test to ensure that the container resolves aliases correctly
-    public function testFunctionalGetFactoryReturnInstanceOfService(): void
+    /**
+     * @return void
+     */
+    #[Test]
+    public function functionalGetFactoryReturnInstanceOfService(): void
     {
         $container = new ServiceProviderContainer($this->provider);
 
-        foreach ($this->provider->getFactories() as $alias => $factory) {
-            self::assertTrue($container->has($alias), "Container does not have alias: {$alias}");
+        foreach (array_keys($this->provider->getFactories()) as $alias) {
+            self::assertTrue($container->has($alias), 'Container does not have alias: ' . $alias);
 
             $object = $container->get($alias);
 
-            self::assertNotNull($object, "Failed to resolve alias: {$alias}");
-            self::assertInstanceOf($alias, $object, "Resolved object is not an instance of {$alias}");
+            self::assertNotNull($object, 'Failed to resolve alias: ' . $alias);
+            self::assertInstanceOf($alias, $object, 'Resolved object is not an instance of ' . $alias);
         }
     }
 }

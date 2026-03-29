@@ -8,9 +8,12 @@ declare(strict_types=1);
  * This source file is subject to the license bundled
  * with this source code in the file LICENSE.
  *
- * @link      https://github.com/php-fast-forward/http-factory
- * @copyright Copyright (c) 2025 Felipe Sayão Lobato Abreu <github@mentordosnerds.com>
+ * @copyright Copyright (c) 2025-2026 Felipe Sayão Lobato Abreu <github@mentordosnerds.com>
  * @license   https://opensource.org/licenses/MIT MIT License
+ *
+ * @see       https://github.com/php-fast-forward/http-factory
+ * @see       https://github.com/php-fast-forward
+ * @see       https://datatracker.ietf.org/doc/html/rfc2119
  */
 
 namespace FastForward\Http\Message\Factory;
@@ -23,8 +26,6 @@ use Psr\Http\Message\StreamFactoryInterface as PsrStreamFactoryInterface;
  *
  * Extends the PSR-17 StreamFactoryInterface with additional functionality for creating streams from payloads.
  * Implementations of this interface MUST be capable of generating standard PSR-7 streams as well as payload-aware streams.
- *
- * @package FastForward\Http\Message\Factory
  */
 interface StreamFactoryInterface extends PsrStreamFactoryInterface
 {

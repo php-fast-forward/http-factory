@@ -8,9 +8,12 @@ declare(strict_types=1);
  * This source file is subject to the license bundled
  * with this source code in the file LICENSE.
  *
- * @link      https://github.com/php-fast-forward/http-factory
- * @copyright Copyright (c) 2025 Felipe Sayão Lobato Abreu <github@mentordosnerds.com>
+ * @copyright Copyright (c) 2025-2026 Felipe Sayão Lobato Abreu <github@mentordosnerds.com>
  * @license   https://opensource.org/licenses/MIT MIT License
+ *
+ * @see       https://github.com/php-fast-forward/http-factory
+ * @see       https://github.com/php-fast-forward
+ * @see       https://datatracker.ietf.org/doc/html/rfc2119
  */
 
 namespace FastForward\Http\Message\Factory;
@@ -31,10 +34,8 @@ use Psr\Http\Message\UriInterface;
  * Factory for generating different types of HTTP responses.
  * This class encapsulates a PSR-17 response factory and provides
  * convenient methods for producing responses with content, payloads, redirects, or no content.
- *
- * @package FastForward\Http\Message\Factory
  */
-final class ResponseFactory implements ResponseFactoryInterface
+final readonly class ResponseFactory implements ResponseFactoryInterface
 {
     /**
      * Constructs the ResponseFactory.
@@ -48,7 +49,7 @@ final class ResponseFactory implements ResponseFactoryInterface
     /**
      * Creates a standard HTTP response.
      *
-     * @param int    $code         The HTTP status code. Defaults to 200 (OK).
+     * @param int $code The HTTP status code. Defaults to 200 (OK).
      * @param string $reasonPhrase optional reason phrase
      *
      * @return ResponseInterface the generated response
@@ -92,6 +93,7 @@ final class ResponseFactory implements ResponseFactoryInterface
      * This response SHALL contain no body and have status code 204.
      *
      * @param array<string, string|string[]> $headers optional headers to include
+     * @param array $headers
      *
      * @return ResponseInterface the generated no content response
      */
@@ -120,9 +122,10 @@ final class ResponseFactory implements ResponseFactoryInterface
      * The response SHALL include a 'Location' header and appropriate status code.
      * By default, a temporary (302) redirect is issued unless $permanent is true.
      *
-     * @param string|UriInterface            $uri       the target location for the redirect
-     * @param bool                           $permanent whether to issue a permanent (301) redirect
-     * @param array<string, string|string[]> $headers   optional additional headers
+     * @param string|UriInterface $uri the target location for the redirect
+     * @param bool $permanent whether to issue a permanent (301) redirect
+     * @param array<string, string|string[]> $headers optional additional headers
+     * @param array $headers
      *
      * @return ResponseInterface the generated redirect response
      */
