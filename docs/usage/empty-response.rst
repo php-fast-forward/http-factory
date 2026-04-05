@@ -1,25 +1,45 @@
-Empty Response
-==============
+No-Content Response
+===================
 
-The `createEmptyResponse` method generates a response with no body, typically used for status codes like 204 (No Content).
+``createResponseNoContent()`` creates a ``204 No Content`` response backed by ``FastForward\Http\Message\EmptyResponse``.
 
-Example:
---------
+What It Does
+------------
+
+- always returns status ``204``
+- leaves the body empty
+- lets you attach optional headers
+
+Example
+-------
 
 .. code-block:: php
 
+   use FastForward\Http\Message\Factory\ResponseFactoryInterface;
+
    $responseFactory = $container->get(ResponseFactoryInterface::class);
-   $emptyResponse = $responseFactory->createEmptyResponse();
 
-   // With custom status code
-   $customEmpty = $responseFactory->createEmptyResponse(202);
+   $response = $responseFactory->createResponseNoContent([
+       'X-Resource-Deleted' => 'true',
+   ]);
 
-Use Cases:
-----------
-- Indicating successful processing with no content to return
-- HTTP OPTIONS or DELETE responses
+When To Use It
+--------------
 
-Best Practices:
----------------
-- Use appropriate status codes (204, 202, etc.)
-- Add headers if needed (e.g., Allow for OPTIONS)
+- successful ``DELETE`` handlers
+- ``OPTIONS`` responses with no body
+- endpoints where the client only needs the status code and headers
+
+Important Limitation
+--------------------
+
+This helper is intentionally specific to ``204 No Content``.
+If you need another empty response such as ``202 Accepted``, use the standard PSR-17 method instead.
+
+.. code-block:: php
+
+   use Psr\Http\Message\ResponseFactoryInterface as PsrResponseFactoryInterface;
+
+   $psrResponseFactory = $container->get(PsrResponseFactoryInterface::class);
+
+   $acceptedResponse = $psrResponseFactory->createResponse(202);

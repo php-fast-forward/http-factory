@@ -1,9 +1,13 @@
 Usage
 =====
 
-This section provides a step-by-step guide to each type of response and stream you can create with FastForward HTTP Factory. Each topic below is covered individually, with practical examples and best practices for real-world applications.
+This section focuses on day-to-day tasks.
+Use it when you already have the package installed and want to know which factory to resolve, which helper to call, and what kind of object you get back.
 
-In some cases, you will encounter response or stream objects specific to the `FastForward\Http\Message` namespace, such as `JsonResponse` or `JsonStream`. These classes offer additional features and integration with the FastForward ecosystem, while remaining fully PSR-7 compatible.
+There are two families of services in this package:
+
+- the standard PSR-17 interfaces, which give you generic request, response, stream, URI, and uploaded-file factories
+- the Fast Forward convenience interfaces, which return helper objects such as ``JsonResponse`` and ``JsonStream``
 
 .. toctree::
    :maxdepth: 1
@@ -17,5 +21,3 @@ In some cases, you will encounter response or stream objects specific to the `Fa
    empty-response
    stream-usage
    use-cases
-
-Select a topic above for in-depth guides and real-world scenarios.

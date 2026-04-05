@@ -1,28 +1,56 @@
 JSON Response
 =============
 
-The `createResponseFromPayload` method creates a JSON response from an associative array, automatically setting the Content-Type to `application/json`.
+``createResponseFromPayload()`` is the most convenient way to return JSON from this package.
+It creates a ``FastForward\Http\Message\JsonResponse`` and returns it as ``PayloadResponseInterface``.
 
-In most cases, this method returns an instance of `FastForward\Http\Message\JsonResponse`, a PSR-7 compatible response object with extra features for working with JSON payloads. You can use it as a standard response, but it also provides convenient access to the original payload and encoding options.
+Default Behavior
+----------------
 
-Example:
---------
+- status code: ``200``
+- content type: ``application/json; charset=utf-8``
+- body: a JSON encoding of the provided payload
+- extra capability: access to the original payload through ``getPayload()``
+
+Example
+-------
 
 .. code-block:: php
 
+   use FastForward\Http\Message\Factory\ResponseFactoryInterface;
+
    $responseFactory = $container->get(ResponseFactoryInterface::class);
-   $jsonResponse = $responseFactory->createResponseFromPayload(['success' => true, 'data' => [1, 2, 3]]);
 
-   // $jsonResponse is an instance of FastForward\Http\Message\JsonResponse
+   $response = $responseFactory
+       ->createResponseFromPayload([
+           'success' => true,
+           'data' => ['id' => 10, 'name' => 'Alice'],
+       ])
+       ->withStatus(201);
 
-Use Cases:
-----------
-- Building REST APIs
-- Returning AJAX responses
-- Sending structured data to clients
+Reading Or Replacing The Payload
+--------------------------------
 
-Best Practices:
----------------
-- Ensure your payload is serializable to JSON
-- Handle encoding errors gracefully
-- Set appropriate status codes for errors or success
+The returned response body is a payload-aware JSON stream.
+That means you can inspect or replace the payload without decoding the body manually.
+
+.. code-block:: php
+
+   $payload = $response->getPayload();
+
+   $updatedResponse = $response->withPayload([
+       ...$payload,
+       'meta' => ['cached' => false],
+   ]);
+
+When To Prefer A Payload Stream Instead
+---------------------------------------
+
+Use :doc:`stream-usage` when you want to attach JSON to a response with a custom status or manually controlled headers.
+
+Gotchas
+-------
+
+- The payload must be JSON-encodable
+- Resources are not allowed and will raise an exception
+- Invalid JSON encoding will bubble up from the underlying ``JsonStream``

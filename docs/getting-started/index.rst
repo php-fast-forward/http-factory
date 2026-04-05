@@ -1,26 +1,16 @@
 Getting Started
 ===============
 
-Installation
-------------
+This section is written for first-time users of the package.
+If you are new to PSR-7 or PSR-17, the most useful mental model is:
 
-To install FastForward HTTP Factory, run:
+1. register the service provider
+2. resolve the factory you need from the container
+3. use the PSR-17 interfaces for generic HTTP objects
+4. use the Fast Forward interfaces when you want convenience helpers
 
-.. code-block:: bash
-
-   composer require fast-forward/http-factory
-
-Requirements
-------------
-
-- PHP ^8.3
-- fast-forward/container (optional, for automatic integration)
-- Nyholm/psr7 and Nyholm/psr7-server (installed as dependencies)
-
-Overview
---------
-
-FastForward HTTP Factory provides ready-to-use PSR-17 and PSR-7 factories, making it easy to create interoperable HTTP objects in modern PHP applications.
+The convenience layer is the main value of this package.
+It saves you from repeatedly creating JSON, HTML, text, redirect, and no-content responses by hand.
 
 .. toctree::
    :maxdepth: 2

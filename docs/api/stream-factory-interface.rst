@@ -1,6 +1,16 @@
 StreamFactoryInterface
 ======================
 
+Namespace: ``FastForward\Http\Message\Factory``
+
+Purpose
+-------
+
+``StreamFactoryInterface`` extends the PSR-17 stream factory contract with one extra method for payload-aware JSON streams.
+
+Contract
+--------
+
 .. code-block:: php
 
    interface StreamFactoryInterface extends Psr\Http\Message\StreamFactoryInterface
@@ -8,22 +18,20 @@ StreamFactoryInterface
        public function createStreamFromPayload(array $payload): PayloadStreamInterface;
    }
 
-Description
------------
+What The Extra Method Adds
+--------------------------
 
-Extends the PSR-17 StreamFactoryInterface with additional functionality for creating streams from payloads.
+``createStreamFromPayload()`` returns a ``PayloadStreamInterface`` implementation, which means the stream stays PSR-7 compatible while also exposing payload helpers such as ``getPayload()`` and ``withPayload()``.
 
-Methods
--------
+When To Use It
+--------------
 
-- **createStreamFromPayload(array $payload): PayloadStreamInterface**
+- when you want a JSON stream but still need to assemble the response manually
+- when a status or header combination does not match the built-in response helpers
+- when you want payload-aware stream handling in tests or middleware
 
-  Creates a JSON stream from an array. The returned stream implements PayloadStreamInterface and is both readable and seekable.
-
-Examples
+See Also
 --------
 
-.. code-block:: php
-
-   $streamFactory = $container->get(StreamFactoryInterface::class);
-   $jsonStream = $streamFactory->createStreamFromPayload(['foo' => 'bar']);
+- :doc:`stream-factory`
+- :doc:`../usage/stream-usage`

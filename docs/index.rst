@@ -1,18 +1,32 @@
-.. FastForward HTTP Factory documentation master file
-   See https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-toctree
+FastForward HTTP Factory
+========================
 
+``fast-forward/http-factory`` helps you bootstrap HTTP message factories quickly in Fast Forward applications.
+It combines three pieces that beginners often need at the same time:
 
-**FastForward HTTP Factory** is a PSR-11 compatible service provider that registers a complete set of PSR-17 and PSR-7 HTTP factories using Nyholm PSR-7 and Nyholm ServerRequestCreator. This documentation covers installation, usage, registered services, API, and advanced details.
+- a service provider that wires common HTTP services into the container
+- the standard PSR-17 factory interfaces for requests, responses, streams, URIs, and uploaded files
+- Fast Forward convenience factories for common response and payload-stream scenarios
 
-Documentation
-=============
+The package is intentionally small. It does not replace a router, middleware dispatcher, or full HTTP kernel.
+Its job is to make the creation of PSR-7 and PSR-17 objects predictable and easy to reuse.
 
-Useful Links:
--------------
+What You Get
+------------
+
+- ``Nyholm\Psr7\Factory\Psr17Factory`` registered once and reused through multiple PSR-17 aliases
+- ``Nyholm\Psr7Server\ServerRequestCreator`` and ``ServerRequestInterface::class`` resolution from PHP globals
+- ``FastForward\Http\Message\Factory\ResponseFactory`` for HTML, JSON, text, redirect, and no-content responses
+- ``FastForward\Http\Message\Factory\StreamFactory`` for regular PSR-17 streams plus payload-aware JSON streams
+
+Useful Links
+------------
 
 - `GitHub Repository <https://github.com/php-fast-forward/http-factory>`_
-- `Coverage Report <../public/coverage/index.html>`_
-- `API Reference (README) <https://github.com/php-fast-forward/http-factory#readme>`_
+- `Packagist <https://packagist.org/packages/fast-forward/http-factory>`_
+- `Issue Tracker <https://github.com/php-fast-forward/http-factory/issues>`_
+- `Coverage Report <https://php-fast-forward.github.io/http-factory/coverage/index.html>`_
+- `Testdox Report <https://php-fast-forward.github.io/http-factory/coverage/testdox.html>`_
 
 .. toctree::
    :maxdepth: 2
@@ -22,5 +36,6 @@ Useful Links:
    usage/index
    advanced/index
    api/index
-   faq
    links/index
+   faq
+   compatibility

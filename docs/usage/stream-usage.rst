@@ -1,37 +1,67 @@
 Stream Usage
 ============
 
-The StreamFactoryInterface provides methods to create streams from strings, files, or payloads.
+``FastForward\Http\Message\Factory\StreamFactoryInterface`` extends the PSR-17 stream factory contract with one extra helper: ``createStreamFromPayload()``.
 
-When using `createStreamFromPayload`, the returned object is typically an instance of `FastForward\Http\Message\JsonStream`, a PSR-7 compatible stream with extra features for handling JSON data. This allows you to work with the original payload and encoding options, in addition to standard stream operations.
+The concrete ``StreamFactory`` behaves like a decorator:
 
-Example: Creating a JSON Stream
--------------------------------
+- ``createStream()``, ``createStreamFromFile()``, and ``createStreamFromResource()`` delegate to the wrapped PSR-17 factory
+- ``createStreamFromPayload()`` creates a ``FastForward\Http\Message\JsonStream`` directly
+
+Creating A JSON Payload Stream
+------------------------------
 
 .. code-block:: php
 
+   use FastForward\Http\Message\Factory\StreamFactoryInterface;
+
    $streamFactory = $container->get(StreamFactoryInterface::class);
-   $jsonStream = $streamFactory->createStreamFromPayload(['foo' => 'bar']);
 
-   // $jsonStream is an instance of FastForward\Http\Message\JsonStream
+   $stream = $streamFactory->createStreamFromPayload([
+       'queued' => true,
+       'jobId' => 42,
+   ]);
 
-Other Stream Usages
--------------------
+   $payload = $stream->getPayload();
 
-- Create a stream from a string:
+Creating A Custom JSON Response
+-------------------------------
 
-  .. code-block:: php
+This is useful when you want the payload convenience but need a status code or header combination that the response helper methods do not cover directly.
 
-     $stream = $streamFactory->createStream('content');
+.. code-block:: php
 
-- Create a stream from a file:
+   use FastForward\Http\Message\Factory\ResponseFactoryInterface;
+   use FastForward\Http\Message\Factory\StreamFactoryInterface;
 
-  .. code-block:: php
+   $responseFactory = $container->get(ResponseFactoryInterface::class);
+   $streamFactory = $container->get(StreamFactoryInterface::class);
 
-     $stream = $streamFactory->createStreamFromFile('/path/to/file.txt');
+   $response = $responseFactory
+       ->createResponse(202)
+       ->withHeader('Content-Type', 'application/json; charset=utf-8')
+       ->withBody($streamFactory->createStreamFromPayload([
+           'accepted' => true,
+       ]));
 
-Use Cases:
-----------
-- Streaming large files
-- Sending dynamic content
-- Working with PSR-7 compatible middlewares
+Other Stream Sources
+--------------------
+
+.. code-block:: php
+
+   $memoryStream = $streamFactory->createStream('plain content');
+
+   $fileStream = $streamFactory->createStreamFromFile('/tmp/report.txt');
+
+   $resource = fopen('php://temp', 'wb+');
+   fwrite($resource, 'resource content');
+   rewind($resource);
+
+   $resourceStream = $streamFactory->createStreamFromResource($resource);
+
+Gotchas
+-------
+
+- ``createStreamFromPayload()`` expects JSON-encodable data
+- resources inside the payload are not supported
+- remember to close file handles and resources you open yourself

@@ -1,22 +1,37 @@
 Text Response
 =============
 
-The `createResponseFromText` method generates a plain text response with the Content-Type set to `text/plain`.
+``createResponseFromText()`` creates a plain-text response backed by ``FastForward\Http\Message\TextResponse``.
 
-Example:
---------
+Default Behavior
+----------------
+
+- status code: ``200``
+- content type: ``text/plain; charset=utf-8``
+- body: the string you pass in
+
+Example
+-------
 
 .. code-block:: php
 
+   use FastForward\Http\Message\Factory\ResponseFactoryInterface;
+
    $responseFactory = $container->get(ResponseFactoryInterface::class);
-   $textResponse = $responseFactory->createResponseFromText('Plain text output');
 
-Use Cases:
-----------
-- Returning logs or debug output
-- Simple status messages
+   $response = $responseFactory
+       ->createResponseFromText('Service is warming up')
+       ->withStatus(503);
 
-Best Practices:
----------------
-- Use for endpoints where HTML or JSON is not required
-- Set status codes to reflect the result (e.g., 200 for OK, 400 for errors)
+Good Uses
+---------
+
+- health and readiness endpoints
+- debugging endpoints
+- CLI-oriented or webhook responses where structured JSON is unnecessary
+
+Tip
+---
+
+If the output is structured data, prefer :doc:`json-response`.
+Plain text is best when humans will read the body directly.

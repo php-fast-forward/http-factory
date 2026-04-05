@@ -1,42 +1,98 @@
 Use Cases
 =========
 
-This section presents real-world scenarios for using FastForward HTTP Factory in your applications.
+This page collects small real-world scenarios that new users usually look for first.
 
-REST API Example
-----------------
+Return JSON From An API Endpoint
+--------------------------------
 
 .. code-block:: php
+
+   use FastForward\Http\Message\Factory\ResponseFactoryInterface;
 
    $responseFactory = $container->get(ResponseFactoryInterface::class);
-   $data = ['user' => ['id' => 1, 'name' => 'Alice']];
-   $response = $responseFactory->createResponseFromPayload($data);
 
-HTML Page Rendering
--------------------
+   return $responseFactory->createResponseFromPayload([
+       'user' => [
+           'id' => 1,
+           'name' => 'Alice',
+       ],
+   ]);
 
-.. code-block:: php
-
-   $responseFactory = $container->get(ResponseFactoryInterface::class);
-   $html = '<h1>Welcome!</h1>';
-   $response = $responseFactory->createResponseFromHtml($html);
-
-Redirect After Login
---------------------
+Return An HTML Maintenance Page
+-------------------------------
 
 .. code-block:: php
 
-   $responseFactory = $container->get(ResponseFactoryInterface::class);
-   $response = $responseFactory->createRedirectResponse('/dashboard');
+   return $responseFactory
+       ->createResponseFromHtml('<h1>Maintenance</h1><p>Please try again later.</p>')
+       ->withStatus(503);
 
-Streaming a File
-----------------
+Return Plain Text For A Health Check
+------------------------------------
 
 .. code-block:: php
+
+   return $responseFactory->createResponseFromText('ok');
+
+Redirect After Authentication
+-----------------------------
+
+.. code-block:: php
+
+   return $responseFactory->createResponseRedirect('/dashboard');
+
+Return 204 After A Delete Operation
+-----------------------------------
+
+.. code-block:: php
+
+   return $responseFactory->createResponseNoContent([
+       'X-Deleted-Resource' => 'account',
+   ]);
+
+Return 202 Accepted With A JSON Body
+------------------------------------
+
+.. code-block:: php
+
+   use FastForward\Http\Message\Factory\StreamFactoryInterface;
 
    $streamFactory = $container->get(StreamFactoryInterface::class);
-   $stream = $streamFactory->createStreamFromFile('/tmp/report.pdf');
-   $responseFactory = $container->get(ResponseFactoryInterface::class);
-   $response = $responseFactory->createResponse(200)->withBody($stream);
 
-See the API Reference for more advanced usage and customization options.
+   return $responseFactory
+       ->createResponse(202)
+       ->withHeader('Content-Type', 'application/json; charset=utf-8')
+       ->withBody($streamFactory->createStreamFromPayload([
+           'accepted' => true,
+           'jobId' => 'sync-123',
+       ]));
+
+Create The Current Request From Globals
+---------------------------------------
+
+.. code-block:: php
+
+   use Psr\Http\Message\ServerRequestInterface;
+
+   $request = $container->get(ServerRequestInterface::class);
+
+   $method = $request->getMethod();
+   $path = $request->getUri()->getPath();
+
+Use The Helpers Without A Container
+-----------------------------------
+
+.. code-block:: php
+
+   use FastForward\Http\Message\Factory\ResponseFactory;
+   use FastForward\Http\Message\Factory\StreamFactory;
+   use Nyholm\Psr7\Factory\Psr17Factory;
+
+   $psr17Factory = new Psr17Factory();
+   $responseFactory = new ResponseFactory($psr17Factory);
+   $streamFactory = new StreamFactory($psr17Factory);
+
+   $response = $responseFactory->createResponseFromPayload([
+       'standalone' => true,
+   ]);
