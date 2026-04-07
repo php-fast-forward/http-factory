@@ -74,22 +74,22 @@ $acceptedResponse = $responseFactory
 
 The following services will be automatically registered in your container when using `HttpMessageFactoryServiceProvider`:
 
-| Service Interface                                     | Implementation Source                                |
-|------------------------------------------------------|------------------------------------------------------|
-| `Psr\Http\Message\RequestFactoryInterface`           | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)       |
-| `Psr\Http\Message\ResponseFactoryInterface`          | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)       |
-| `Psr\Http\Message\ServerRequestFactoryInterface`     | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)       |
-| `Psr\Http\Message\StreamFactoryInterface`            | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)       |
-| `Psr\Http\Message\UploadedFileFactoryInterface`      | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)       |
-| `Psr\Http\Message\UriFactoryInterface`               | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)       |
-| `Nyholm\Psr7Server\ServerRequestCreatorInterface`    | `Nyholm\Psr7Server\ServerRequestCreator` (via alias) |
-| `FastForward\Http\Message\Factory\ResponseFactoryInterface` | `FastForward\Http\Message\Factory\ResponseFactory` (via alias) |
-| `FastForward\Http\Message\Factory\StreamFactoryInterface` | `FastForward\Http\Message\Factory\StreamFactory` (via alias) |
-| `Nyholm\Psr7\Factory\Psr17Factory`                   | Registered via `InvokableFactory`                    |
-| `Nyholm\Psr7Server\ServerRequestCreator`             | Registered via `InvokableFactory`, with dependencies |
-| `FastForward\Http\Message\Factory\ResponseFactory`   | Registered via `InvokableFactory`                    |
-| `FastForward\Http\Message\Factory\StreamFactory`     | Registered via `InvokableFactory`                    |
-| `Psr\Http\Message\ServerRequestInterface`            | Created by calling `fromGlobals()` on `ServerRequestCreator` via `MethodFactory` |
+| Service Interface                                           | Implementation Source                                                            |
+|-------------------------------------------------------------|----------------------------------------------------------------------------------|
+| `Psr\Http\Message\RequestFactoryInterface`                  | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)                                   |
+| `Psr\Http\Message\ResponseFactoryInterface`                 | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)                                   |
+| `Psr\Http\Message\ServerRequestFactoryInterface`            | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)                                   |
+| `Psr\Http\Message\StreamFactoryInterface`                   | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)                                   |
+| `Psr\Http\Message\UploadedFileFactoryInterface`             | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)                                   |
+| `Psr\Http\Message\UriFactoryInterface`                      | `Nyholm\Psr7\Factory\Psr17Factory` (via alias)                                   |
+| `Nyholm\Psr7Server\ServerRequestCreatorInterface`           | `Nyholm\Psr7Server\ServerRequestCreator` (via alias)                             |
+| `FastForward\Http\Message\Factory\ResponseFactoryInterface` | `FastForward\Http\Message\Factory\ResponseFactory` (via alias)                   |
+| `FastForward\Http\Message\Factory\StreamFactoryInterface`   | `FastForward\Http\Message\Factory\StreamFactory` (via alias)                     |
+| `Nyholm\Psr7\Factory\Psr17Factory`                          | Registered via `InvokableFactory`                                                |
+| `Nyholm\Psr7Server\ServerRequestCreator`                    | Registered via `InvokableFactory`, with dependencies                             |
+| `FastForward\Http\Message\Factory\ResponseFactory`          | Registered via `InvokableFactory`                                                |
+| `FastForward\Http\Message\Factory\StreamFactory`            | Registered via `InvokableFactory`                                                |
+| `Psr\Http\Message\ServerRequestInterface`                   | Created by calling `fromGlobals()` on `ServerRequestCreator` via `MethodFactory` |
 
 ## Documentation
 
