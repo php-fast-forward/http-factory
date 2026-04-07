@@ -39,6 +39,7 @@ There are two similarly named response and stream factory interfaces:
 - `FastForward\Http\Message\Factory\ResponseFactoryInterface` and `FastForward\Http\Message\Factory\StreamFactoryInterface` for Fast Forward helper methods
 
 If you’re using `fast-forward/container`:
+
 ```php
 use FastForward\Container\container;
 use FastForward\Config\ArrayConfig;
