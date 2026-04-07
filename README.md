@@ -1,8 +1,15 @@
 # FastForward HTTP Factory
 
-[![PHP Version](https://img.shields.io/badge/PHP-^8.3-8892BF?logo=php)](https://www.php.net/)
-[![License](https://img.shields.io/github/license/php-fast-forward/http-factory)](https://opensource.org/licenses/MIT)
-[![CI](https://github.com/php-fast-forward/http-factory/actions/workflows/tests.yml/badge.svg)](https://github.com/php-fast-forward/http-factory/actions)
+[![PHP Version](https://img.shields.io/badge/php-^8.3-777BB4?logo=php&logoColor=white)](https://www.php.net/releases/)
+[![Composer Package](https://img.shields.io/badge/composer-fast--forward%2Fhttp--factory-F28D1A.svg?logo=composer&logoColor=white)](https://packagist.org/packages/fast-forward/http-factory)
+[![Tests](https://img.shields.io/github/actions/workflow/status/php-fast-forward/http-factory/tests.yml?logo=githubactions&logoColor=white&label=tests&color=22C55E)](https://github.com/php-fast-forward/http-factory/actions/workflows/tests.yml)
+[![Coverage](https://img.shields.io/badge/coverage-phpunit-4ADE80?logo=php&logoColor=white)](https://php-fast-forward.github.io/http-factory/coverage/index.html)
+[![Docs](https://img.shields.io/github/deployments/php-fast-forward/http-factory/github-pages?logo=readthedocs&logoColor=white&label=docs&labelColor=1E293B&color=38BDF8&style=flat)](https://php-fast-forward.github.io/http-factory/index.html)
+[![License](https://img.shields.io/github/license/php-fast-forward/http-factory?color=64748B)](LICENSE)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/php-fast-forward?logo=githubsponsors&logoColor=white&color=EC4899)](https://github.com/sponsors/php-fast-forward)
+
+[![PSR-11](https://img.shields.io/badge/PSR--11-container-777BB4?logo=php&logoColor=white)](https://www.php-fig.org/psr/psr-11/)
+[![PSR-17](https://img.shields.io/badge/PSR--17-http--factory-777BB4?logo=php&logoColor=white)](https://www.php-fig.org/psr/psr-17/)
 
 A Fast Forward service provider and helper-factory package for [PSR-17](https://www.php-fig.org/psr/psr-17/) and [PSR-7](https://www.php-fig.org/psr/psr-7/) HTTP objects, built on top of [Nyholm PSR-7](https://github.com/Nyholm/psr7) and [Nyholm ServerRequestCreator](https://github.com/Nyholm/psr7-server).
 
