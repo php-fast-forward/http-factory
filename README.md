@@ -24,6 +24,7 @@ composer require fast-forward/http-factory
 ```
 
 ## Features
+
 - Reuses one `Nyholm\Psr7\Factory\Psr17Factory` instance for the standard PSR-17 interfaces
 - Registers `Nyholm\Psr7Server\ServerRequestCreator` and exposes `ServerRequestInterface::class` via `fromGlobals()`
 - Exposes `FastForward\Http\Message\Factory\ResponseFactoryInterface` for HTML, JSON, text, redirect, and no-content helpers
