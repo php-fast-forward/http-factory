@@ -1,5 +1,9 @@
 # FastForward HTTP Factory
 
+<p align="center">
+  <img src="docs/_static/mascot-banner.png" alt="Dash creating HTTP requests, responses, streams and URI objects" width="840">
+</p>
+
 [![PHP Version](https://img.shields.io/badge/php-^8.3-777BB4?logo=php&logoColor=white)](https://www.php.net/releases/)
 [![Composer Package](https://img.shields.io/badge/composer-fast--forward%2Fhttp--factory-F28D1A.svg?logo=composer&logoColor=white)](https://packagist.org/packages/fast-forward/http-factory)
 [![Tests](https://img.shields.io/github/actions/workflow/status/php-fast-forward/http-factory/tests.yml?logo=githubactions&logoColor=white&label=tests&color=22C55E)](https://github.com/php-fast-forward/http-factory/actions/workflows/tests.yml)
