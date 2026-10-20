@@ -30,9 +30,10 @@ version, history and fragment deletions before merging it. It never merges itsel
 its approved merge publishes the version tag and GitHub Release. Installing the
 workflow or merging an ordinary contribution does not publish a release.
 
-There is no central `CHANGELOG.md` yet. The workflow's `source: github` imports
-the four existing releases when it first consolidates this file, preserving their
-published dates and actual bodies. Only `v1.2.0` has a body (a comparison link);
+`CHANGELOG.md` includes all four published stable versions, backfilled from
+GitHub Releases with their original publication dates and actual bodies. The
+workflow uses `source: github` to retain that evidence. Only `v1.2.0` has a body
+(a comparison link);
 the earlier releases are empty. Do not invent historical changes, authors or PR
 references to fill those gaps. New fragments are consolidated using Keep a
 Changelog headings and version links, with verified origin PR links when available.
