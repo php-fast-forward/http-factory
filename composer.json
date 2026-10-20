@@ -16,7 +16,7 @@
     },
     "require": {
         "php": "^8.3",
-        "fast-forward/container": "^1.5",
+        "fast-forward/container": "^1.10",
         "fast-forward/http-message": "^1.2",
         "nyholm/psr7-server": "^1.1",
         "psr/http-factory": "^1.1"
