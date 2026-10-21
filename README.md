@@ -114,3 +114,12 @@ This package is open-source software licensed under the [MIT License](https://op
 
 Contributions, issues, and feature requests are welcome!  
 Feel free to open a [GitHub Issue](https://github.com/php-fast-forward/http-factory/issues) or submit a Pull Request.
+
+## Consumer agent skill
+
+The package includes [fast-forward-http-factory](resources/skills/fast-forward-http-factory/SKILL.md) for application integration.
+It supports `fast-forward/http-factory:^1.3`; inspect the installed version.
+See [skill installation and lifecycle](resources/skills/fast-forward-http-factory/references/installation.md) for
+optional project synchronization with `llm/skills ^1.15`, guarded manual
+project/global copies and a pinned Skills CLI alternative. Shipping files does
+not install tooling or activate the skill in an agent session.
