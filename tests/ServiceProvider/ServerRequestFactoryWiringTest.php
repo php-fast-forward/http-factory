@@ -34,6 +34,10 @@ use Psr\Http\Message\UriFactoryInterface;
 #[CoversClass(HttpMessageFactoryServiceProvider::class)]
 final class ServerRequestFactoryWiringTest extends TestCase
 {
+    /**
+     * Separate PSR-17 implementations must not make request creation and
+     * server-request creation depend on the same container service.
+     */
     public function testCreatorUsesTheIndependentlyConfiguredServerRequestFactory(): void
     {
         $requestFactory = $this->createMock(RequestFactoryInterface::class);
