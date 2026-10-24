@@ -74,7 +74,7 @@ final class HttpMessageFactoryServiceProvider implements ServiceProviderInterfac
             Psr17Factory::class                  => new InvokableFactory(Psr17Factory::class),
             ServerRequestCreator::class          => new InvokableFactory(
                 ServerRequestCreator::class,
-                RequestFactoryInterface::class,
+                ServerRequestFactoryInterface::class,
                 UriFactoryInterface::class,
                 UploadedFileFactoryInterface::class,
                 StreamFactoryInterface::class,
