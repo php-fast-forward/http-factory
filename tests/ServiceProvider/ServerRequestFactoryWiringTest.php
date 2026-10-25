@@ -53,13 +53,19 @@ final class ServerRequestFactoryWiringTest extends TestCase
             UploadedFileFactoryInterface::class => $psr17,
             StreamFactoryInterface::class => $psr17,
         ];
-        $container = $this->createStub(ContainerInterface::class);
-        $container->method('has')->willReturnCallback(static fn(string $id): bool => isset($services[$id]));
-        $container->method('get')->willReturnCallback(static fn(string $id): mixed => $services[$id]);
+        $container = self::createStub(ContainerInterface::class);
+        $container->method('has')
+            ->willReturnCallback(static fn(string $id): bool => isset($services[$id]));
+        $container->method('get')
+            ->willReturnCallback(static fn(string $id): mixed => $services[$id]);
         $factory = (new HttpMessageFactoryServiceProvider())->getFactories()[ServerRequestCreator::class];
 
         $creator = $factory($container);
-        $response = $creator->fromArrays(['REQUEST_METHOD' => 'GET', 'HTTP_HOST' => 'example.test', 'REQUEST_URI' => '/']);
+        $response = $creator->fromArrays([
+            'REQUEST_METHOD' => 'GET',
+            'HTTP_HOST' => 'example.test',
+            'REQUEST_URI' => '/',
+        ]);
 
         self::assertSame('GET', $response->getMethod());
         self::assertSame('example.test', $response->getUri()->getHost());
